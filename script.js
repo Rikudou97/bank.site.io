@@ -55,15 +55,6 @@ btnScrollTo.addEventListener('click', function (e) {
     document.documentElement.clientHeight,
     document.documentElement.clientWidth
   );
-  //OLD WAY TO SCROL
-  /*
-  window.scrollTo({
-    left: s1coords.left + window.pageXOffset,
-    top: s1coords.top + window.pageYOffset,
-    behavior: 'smooth', //gona scroll smooth
-  });
-*/
-  //MODERD WAY TO SCROLL
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
@@ -71,18 +62,6 @@ btnScrollTo.addEventListener('click', function (e) {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////
 //Page navigation
-
-/* OLD VERSION
-document.querySelectorAll('.nav__link').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    
-  });
-});
-*/
-//ELEMENT DELEGATION
-
-// 1. Add event listenenr to common parent element
-// 2. Determine what element originated the event
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
@@ -98,7 +77,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
-  //Guard clause - return if some condition is matched
   if (!clicked) return;
 
   //Remove active classes
@@ -133,32 +111,6 @@ nav.addEventListener('mouseout', handleHover.bind(1)); // BIND RETURNS A NEW FUN
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
-// Sticky nav bar
-/*
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
-
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
-});
-*/
-//THE INTERSECTION OF SERVER API METHOD
-/*
-const obsCallback = (entires, observer) => {
-  entires.forEach(entry => {
-    console.log(entry);
-  });
-};
-
-const obsOptions = {
-  root: null,
-  threshold: [0, 0.2],
-};
-
-const observer = new IntersectionObserver(obsCallback, obsOptions);
-observer.observe(section1);
-*/
 
 ///STICKY NAV////////////////////////////////
 const header = document.querySelector('.header');
@@ -239,12 +191,6 @@ const slider = function () {
   let curSlide = 0;
   const maxSlide = slides.length - 1;
 
-  //const slider = document.querySelector('.slider');
-  //slider.style.transform = 'scale(0.2) translateX(-1200px)';
-  //402
-  //slider.style.overflow = 'visible';
-  //slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
-
   const createDots = function () {
     slides.forEach(function (_, i) {
       dotContainer.insertAdjacentHTML(
@@ -305,7 +251,7 @@ const slider = function () {
     console.log(e);
 
     if (e.key === 'ArrowLeft') prevSlide();
-    e.key === 'ArrowRight' && nextSlide(); ///Shortcircuit
+    e.key === 'ArrowRight' && nextSlide(); 
   });
 
   dotContainer.addEventListener('click', function (e) {
@@ -317,158 +263,7 @@ const slider = function () {
   });
 };
 slider();
-//If curSlide = 1
-//0%, 100%, 200%, 300%
-/////////////////////////////////////////////
-//selecting html elements
-/*
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
-*/
-/*
-const header = document.querySelector('.header');
-const allSections = document.querySelectorAll('.section');
-console.log(allSections);
 
-document.getElementById('#section--1');
-const allButtons = document.getElementsByTagName('button');
-
-console.log(allButtons);
-console.log(document.getElementsByClassName('btn'));
-
-//Creating and inserting elements
-//.insertAdjacentHTML
-
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-//message.textContent =
-// 'We use cookies for improved functionality and analytics.';
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class = "btn btn--close-cookie">Got it!</button>';
-
-header.prepend(message); //adds as the firsst child of an element
-//header.append(message); //inserts at the end
-//header.append(message.clondeNode(true))
-header.before(message);
-//header.after(message);
-
-//DELETE ELEMENTS
-const btnCloseCookie = document.querySelector('.btn--close-cookie');
-btnCloseCookie.addEventListener('click', function () {
-  message.remove();
-});
-
-//Styles
-/*
-message.style.backgroundColor = '#37383d';
-message.style.width = '120% ';
-
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
-
-document.documentElement.style.setProperty('--color-primary', 'olive');
-
-const logo = document.querySelector('.nav__logo');
-/*
-console.log(logo.alt);
-console.log(logo.src);
-
-logo.alt = 'Beautiful minimalist logo';
-logo.setAttribute('company', 'Bankist');
-/*
-console.log(logo.src);
-console.log(logo.getAttribute('src'));
-
-//Data atributes
-console.log(logo.dataset.versionNumber);
-
-//CLASSES
-logo.classList.add('c', 'j');
-logo.classList.remove('c');
-logo.classList.toggle('c');
-logo.classList.contains('c');
-
-logo.className = 'jonas';
-*/
-/*
-
-const h1 = document.querySelector('h1');
-
-const alertH1 = function (e) {
-  alert('addEventListener: Great! You are reading the heading :D');
-
-  h1.removeEventListener('mouseenter', alertH1);
-};
-*/
-//h1.addEventListener('mouseenter', alertH1);
-//other method of attaching events
-/*
-h1.onmouseenter = function (e) {
-  alert('addEventListener: Great! You are reading the heading :D');
-};
-*/
-//remove event
-/*
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
-
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)}`;
-
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target);
-});
-
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('CONTAINER', e.target);
-});
-
-document.querySelector('.nav').addEventListener(
-  'click',
-  function (e) {
-    this.style.backgroundColor = randomColor();
-    console.log('NAV', e.target);
-  },
-  true
-);
-*/
-
-//const h1 = document.querySelector('h1');
-
-///////////// DOM  TRAVERSING //////////////////
-///////////////////////////////////////////////
-//Foing downwards: child
-//console.log(h1.querySelectorAll('.highlight'));
-//console.log(h1.childNodes);
-//console.log(h1.children);
-//h1.firstElementChild.style.color = 'white';
-//h1.lastElementChild.style.color = 'red';
-
-//Going upwards: parents
-//console.log(h1.parentNode);
-//console.log(h1.parentElement);
-
-//h1.closest('.header').style.background = 'var(--gradient-secondary)'; // we assign a var from the css root vars
-//h1.closest('h1').style.background = 'var(--gradient-primary)';
-
-//Going sideways: siblings
-/*
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
-*/
-// MOVE TO PARENT ELEMENT AND READ ALL CHILDREN DROM THERE
-
-//MAKE HTML AN ARRAY AND LOPP OVER IT
-//console.log(h1.parentElement.children);
-//[...h1.parentElement.children].forEach(function (el) {
-// if (el !== h1) el.style.transform = 'scale(0.5)';
-//});
 document.addEventListener('DOMContentLoaded', function (e) {
   console.log('HTML parsed and DOM tree built!', e);
 });
@@ -483,5 +278,3 @@ window.addEventListener('beforeunload', function (e) {
   e.returnValue = '';
 });
 
-//DIFFERENT WAYS OF LOADING SCRIPT IN HTML
-//Regular
